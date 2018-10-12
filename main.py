@@ -3,8 +3,8 @@ import shutil
 
 # Have user set the title of the gallery, where the final gallery should be outputted, and the current location of photos
 pageTitle = input("What is the title of this gallery? ")
-outputFolder = input("What directory should the file be created in? ")
 photoLocation = input("Where are the photos located? ")
+outputFolder = input("What directory should the file be created in? ")
 
 outputLocation = outputFolder + "/" + pageTitle + "-gallery.html"
 
@@ -33,6 +33,7 @@ HTMLHead = """
     <link rel="stylesheet" href="http://gatormotorsports.com/framework/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Exo:600|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="http://gatormotorsports.com/css/lightbox.min.css">
     <link rel="stylesheet" href="http://gatormotorsports.com/css/main.css">
     <title>Gator Motorsports - Media</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -104,7 +105,7 @@ HTMLHead = """
 
 outputHTML.write(HTMLHead)
 
-fileCounter = 0;
+photoCounter = 0;
 
 # Iterate through each file in directory
 for filename in os.listdir(photoLocation):
@@ -115,9 +116,9 @@ for filename in os.listdir(photoLocation):
 
         HTMLPhoto = """
         <div class="col-md-3">
-            <a href=" """ + "photos/" + filename + """ ">
+            <a href=" """ + "photos/" + filename + """ "  data-lightbox="gallery">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src=" """ + "photos/" + filename + """ " alt="Card image cap">
+                    <img class="card-img-top" src=" """ + "photos/" + filename + """ " alt="loading...">
                 </div>
             </a>
         </div>
@@ -125,12 +126,12 @@ for filename in os.listdir(photoLocation):
 
         outputHTML.write(HTMLPhoto)
 
-        fileCounter += 1
+        photoCounter += 1
 
-        if fileCounter % 4 == 0:
+        if photoCounter % 4 == 0:
             outputHTML.write('</div></div><div class="content-p"><div class="row">')
 
-if fileCounter % 4 != 0:
+if photoCounter % 4 != 0:
     outputHTML.write("</div>")
 
 HTMLFooter = """
@@ -174,9 +175,11 @@ HTMLFooter = """
 
 </div>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
     <script src="http://gatormotorsports.com/framework/js/bootstrap.min.js"></script>
+    
+    <script src="http://gatormotorsports.com/js/lightbox.min.js"></script>
 
     <script>
 
